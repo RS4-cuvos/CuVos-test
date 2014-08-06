@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+
+<project name="cuvosdb">
+  
+
+  
+  <property name="hjar" value="lib/ojdbc6.jar"/>
+ 
+  <property name="hfile" value="-database.0 data/XE"/>
+  <property name="halias" value="XE"/>
+  <property name="hport" value="1521"/>
+  
+    
+  <target name="execddl">
+      <sql classpath="${hjar}"
+         driver="oracle.jdbc.driver.OracleDriver" 
+         url="jdbc:oracle:thin:@localhost:1521:XE" 
+           userid="SYSTEM" password="Noknok11" 
+   print="yes"
+   
+  
+   >
+
+ DROP TABLE Persoon PURGE;        
+
+
+-- SQL script for TimeX
+
+
+
+-- Step 2: Create tables
+
+
+CREATE TABLE Persoon
+(
+   persoonID INT NOT NULL,
+   voornaam VARCHAR(100) NOT NULL
+);
+
+
+-- Step 3: Create indexes
+CREATE UNIQUE INDEX PersoonIndex ON Persoon (persoonId);
+
+
+-- Step 4: Insert some reference and test data
+INSERT INTO Persoon (PersoonID, voornaam) 
+        VALUES ('1', 'Remi');
+INSERT INTO Persoon (PersoonID, voornaam)
+       VALUES ('2', 'Gordon');
+
+
+-- Step 5: Verify tables and test data look ok
+SELECT * FROM Persoon;
+
+      </sql>
+  </target>
+  
+  
+  <target name="hsqldm">
+      <java fork="true" classpath="${hjar}" 
+            classname="org.hsqldb.util.DatabaseManagerSwing" />
+  </target>
+  <target name="sqltool">
+      <java fork="true" classpath="${hjar}" 
+            classname="org.hsqldb.util.SqlTool" args="localhost-sa"/>
+  </target>
+</project>                                                                             

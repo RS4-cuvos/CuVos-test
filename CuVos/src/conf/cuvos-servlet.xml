@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+         http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="placeholderConfig"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location"
+			value="WEB-INF/classes/cuvos-servlet.properties" />
+	</bean>
+
+	<!-- URL mapping -->
+	<bean id="urlMap"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="urlMap">
+			<props>
+				<prop key="/personenlijst.htm">personenlijstController</prop>
+				<prop key="/voegpersoontoe.htm">voegPersoonToeController</prop>
+			</props>
+		</property>
+	</bean>
+	
+
+	<!-- Controllers -->
+	<bean id="urlFilenameController"
+		class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />
+	
+	<bean name="personenlijstController"
+		class="nl.rsvier.cuvos.controller.PersonenlijstController">
+		<property name="persoonManager">
+			<ref bean="persoonManager" />
+		</property>
+
+		<property name="successView">
+			<value>personenlijst</value>
+		</property>
+	</bean>
+	<bean name="voegPersoonToeController"
+		class="nl.rsvier.cuvos.controller.VoegPersoonToeController">
+		<property name="sessionForm">
+			<value>true</value>
+		</property>
+		<property name="commandClass">
+			<value>nl.rsvier.cuvos.model.Persoon</value>
+		</property>
+		<property name="formView">
+			<value>voegpersoontoe</value>
+		</property>
+		<property name="successView">
+			<value>redirect:personenlijst.htm</value>
+		</property>
+		<!-- validator -->
+		
+		<property name="persoonManager">
+			<ref bean="persoonManager" />
+		</property>
+		<!-- applicationSecurityManager -->
+	</bean>
+
+	<!-- Validators -->
+	
+
+
+	<!-- Model classes -->
+	<bean id="persoonManager"
+		class="nl.rsvier.cuvos.model.PersoonManager" />
+	
+	<!-- Utility classes (applicationSecurityManager) -->
+	
+
+	<!-- View Resolver -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>/WEB-INF/jsp/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+
+	<!-- Spring mail support -->
+	
+	<!-- Spring job scheduling -->
+	
+	<!-- Spring JMX support -->
+
+	<!-- Resource Bundle (bean id="messageSource")-->
+	
+</beans>

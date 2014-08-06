@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="nl.rsvier.cuvos.model.Persoon" table="Persoon">
+		<id name="persoonID" type="integer" column="persoonID">
+			<!-- DISABLED OM ZELF ID IN TE KUNNEN VOEREN generator class="native"/-->
+		</id>
+		
+		
+		<property name = "voornaam" type="string"/>
+		
+	</class>
+
+</hibernate-mapping>
