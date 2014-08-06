@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+
+<project name="cuvosdb">
+  <property name="hjar" value="lib/hsqldb.jar"/>
+  <property name="hclass" value="org.hsqldb.Server"/>
+  <property name="hfile" value="-database.0 data/cuvosdb"/>
+  <property name="halias" value="cuvos"/>
+  <property name="hport" value="9005"/>
+    
+  <target name="starthsql">
+    <java fork="true"
+          classname="${hclass}" classpath="${hjar}" 
+          args="${hfile} -dbname.0 ${halias} -port ${hport}"/>
+  </target>
+    
+  <target name="execddl">
+      <sql classpath="${hjar}"
+         driver="org.hsqldb.jdbcDriver" 
+         url="jdbc:hsqldb:hsql://localhost:${hport}/${halias}" 
+         userid="sa" password="" 
+         print="yes">
+
+CREATE TABLE Persoon 
+( 
+persoonId INTEGER NOT NULL PRIMARY KEY,
+voornaam VARCHAR(100) NOT NULL
+);
+   
+
+
+
+
+INSERT INTO Persoon (PERSOONID, VOORNAAM)
+       VALUES (1, 'Gordon');
+
+INSERT INTO Persoon (PERSOONID, VOORNAAM)
+       VALUES (2, 'Johan');
+
+INSERT INTO Persoon (PERSOONID, VOORNAAM)
+       VALUES (3, 'Mustafa');
+
+INSERT INTO Persoon (PERSOONID, VOORNAAM)
+       VALUES (4, 'Remi');
+
+INSERT INTO Persoon (PERSOONID, VOORNAAM)
+       VALUES (5, 'Roy');
+
+INSERT INTO Persoon (PERSOONID, VOORNAAM)
+       VALUES (6, 'Thomas');
+
+</sql>
+  </target>
+  <target name="hsqldm"> 
+      <java fork="true" classpath="${hjar}" 
+            classname="org.hsqldb.util.DatabaseManagerSwing" />
+  </target>
+  <target name="sqltool">
+      <java fork="true" classpath="${hjar}" 
+            classname="org.hsqldb.util.SqlTool" args="localhost-sa"/>
+  </target>
+</project>
+
+
